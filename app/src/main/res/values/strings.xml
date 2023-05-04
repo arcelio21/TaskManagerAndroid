@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">todo</string>
-    <string name="titleMain_MainActivity">Bienvenido</string>
-    <string name="btn_MainActivity">Iniciar</string>
+    <string name="titleMain_MainActivity">Welcome back</string>
+    <string name="btn_MainActivity">Add</string>
+
+    <!--STRING DE DIALOG START-->
+    <string name="titleDA">Escriba un usuario</string>
+    <string name="txtUser">Usuario nuevo</string>
+    <string name="btnAddUser">Add User</string>
+    <string name="btnCancelledAddUser">Cancelar</string>
 </resources>

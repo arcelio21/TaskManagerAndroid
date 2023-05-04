@@ -1,6 +1,7 @@
 package com.dev6am.todo.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.os.Bundle;
 
@@ -12,5 +13,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DialogFragment df = new AddUserDialog();
+        df.show(getSupportFragmentManager(),"Funciona");
     }
 }
