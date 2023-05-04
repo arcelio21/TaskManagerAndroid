@@ -22,3 +22,15 @@ target/
 
 #IGNORAR ARCHIVOS JAR
 *.jar
+
+#DIRECTORIOS
+.idea/
+.gradle/
+/build
+/gradle
+/captures
+#ARCHIVOS
+**/*.iml
+gradlew
+gradlew.bat
+*.apk
