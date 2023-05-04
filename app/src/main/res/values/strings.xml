@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">todo</string>
+    <string name="titleMain_MainActivity">Bienvenido</string>
+    <string name="btn_MainActivity">Iniciar</string>
+</resources>
