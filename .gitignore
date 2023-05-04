@@ -1,15 +1,24 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+.mvn/
+/src/test/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
+### VS Code ###
+.vscode/
+
+#IGNORAR ARCHIVOS JAR
+*.jar
