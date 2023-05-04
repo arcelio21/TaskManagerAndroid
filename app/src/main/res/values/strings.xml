@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">todo</string>
+
+   <!--NOMBRE DE ARCHIVO SHAREPREFERENCES-->
+    <string name="nameSharePreferencesFIle">configTodo</string>
     <string name="titleMain_MainActivity">Welcome back</string>
     <string name="btn_MainActivity">Add</string>
 
