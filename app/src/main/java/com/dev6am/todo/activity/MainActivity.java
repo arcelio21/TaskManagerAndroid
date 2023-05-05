@@ -1,8 +1,10 @@
 package com.dev6am.todo.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -22,16 +24,33 @@ public class MainActivity extends AppCompatActivity {
         NAME_FILE_SP =  getString(R.string.nameSharePreferencesFIle);
 
         if(validateUserNotExist()){
-            showDialog();
+            showDialogUser();
         }
+
+
     }
 
 
+    public void showDialogTask(View view){
+        //showDialogTask();
+        showAddTaskActivity();
+    }
+
+    private void showAddTaskActivity(){
+        Intent intent = new Intent(this, AddTaskActivity.class);
+        startActivity(intent);
+
+    }
+
+    private void showDialogTask(){
+        DialogFragment dialogFragment = new AddTaskDialog();
+        dialogFragment.show(getSupportFragmentManager(),"Dialog add Task");
+    }
     /**
      * Muestra la ventana de dialogo la primera vez que el usuario ingrese su usuario
      * o lo quiera cambiar
      */
-    private void showDialog(){
+    private void showDialogUser(){
 
         DialogFragment dialogFragment = new AddUserDialog();
         dialogFragment.show(getSupportFragmentManager(),"Dialog Add User");
