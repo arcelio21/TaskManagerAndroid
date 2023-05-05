@@ -1,14 +1,27 @@
 <resources>
     <string name="app_name">todo</string>
 
-   <!--NOMBRE DE ARCHIVO SHAREPREFERENCES-->
+    <!--NOMBRE DE ARCHIVO SHAREPREFERENCES-->
     <string name="nameSharePreferencesFIle">configTodo</string>
     <string name="titleMain_MainActivity">Welcome back</string>
     <string name="btn_MainActivity">Add</string>
 
     <!--STRING DE DIALOG START-->
-    <string name="titleDA">Escriba un usuario</string>
-    <string name="txtUser">Usuario nuevo</string>
+    <string name="titleDA">Add new User</string>
+    <string name="txtUser">New User</string>
     <string name="btnAddUser">Add User</string>
-    <string name="btnCancelledAddUser">Cancelar</string>
+    <string name="btnCancelledAddUser">skip</string>
+
+    <!--STRING DE DIALOG TASK-->
+    <string name="btnAddTask">Save</string>
+    <string name="titleTask">New Task</string>
+    <string name="txtNameTask">Name</string>
+    <string name="txtDateTask">Date</string>
+    <string name="txtcategoryTask">Category</string>
+    <string name="txtPriorityTask">Priority</string>
+    <string name="txtSubTast">Subtask</string>
+    <string name="txtMoreInfo">More Information</string>
+    <string name="spinCategory">Choose category</string>
+    <string name="spinPriority">Choose priority</string>
+    <string name="mm_dd_yyyy">mm/dd/yyyy</string>
 </resources>
