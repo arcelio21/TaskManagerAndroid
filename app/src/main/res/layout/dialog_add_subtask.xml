@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="412dp"
+    android:layout_height="139dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="1dp"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/txtNameSubTask"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:ems="10"
+        android:fontFamily="serif-monospace"
+        android:hint="@string/txtNameTask"
+        android:inputType="textShortMessage|text"
+        android:textColor="@color/colorTextDialogTask"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelSubTask"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:text="@string/btnCancelledAddUser" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAddSubTask"
+            android:layout_width="147dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="20dp"
+            android:text="@string/btnAddTask" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
