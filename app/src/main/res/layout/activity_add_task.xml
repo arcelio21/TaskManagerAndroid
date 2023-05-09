@@ -8,8 +8,8 @@
 
 
     <LinearLayout
-        android:layout_width="411dp"
-        android:layout_height="715dp"
+        android:layout_width="418dp"
+        android:layout_height="730dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,33 +149,12 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:contentDescription="@string/spinPriority" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btnAddSubTask"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="clickBtnAddSubTask"
-                android:text="@string/txtSubTast" />
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </ScrollView>
         </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -196,36 +175,57 @@
                     android:textColorHint="#757575"
                     android:textStyle="italic" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btnCancelTask"
-                        android:layout_width="86dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@android:string/cancel" />
-
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/white" />
-
-                    <Button
-                        android:id="@+id/btnSaveTask"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="showSave"
-                        android:text="@string/btnAddTask" />
-                </LinearLayout>
-
             </LinearLayout>
         </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="291dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnAddSubTask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickBtnAddSubTask"
+                android:text="@string/txtSubTast" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/RVSubTask"
+                android:layout_width="match_parent"
+                android:layout_height="183dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCancelTask"
+                    android:layout_width="86dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="@android:string/cancel" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/white" />
+
+                <Button
+                    android:id="@+id/btnSaveTask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="showSave"
+                    android:text="@string/btnAddTask" />
+            </LinearLayout>
+
+        </LinearLayout>
 
 
     </LinearLayout>
