@@ -5,15 +5,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.dev6am.todo.R;
+import com.dev6am.todo.model.User;
+import com.dev6am.todo.viewmodel.MainViewModel;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    private  String NAME_FILE_SP;
+    private MainViewModel mainViewModel;
 
 
 
@@ -21,10 +26,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NAME_FILE_SP =  getString(R.string.nameSharePreferencesFIle);
 
-        if(validateUserNotExist()){
-            showDialogUser();
+        mainViewModel= new MainViewModel();
+
+        if(validateUserNotExist(this)){
+            showDialogUser(); //ESTO ES UN PROCESO ASINCRONO
+        }else {
+            this.setInfoUser(this);
         }
 
 
@@ -42,10 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void showDialogTask(){
-        DialogFragment dialogFragment = new AddTaskDialog();
-        dialogFragment.show(getSupportFragmentManager(),"Dialog add Task");
-    }
+
     /**
      * Muestra la ventana de dialogo la primera vez que el usuario ingrese su usuario
      * o lo quiera cambiar
@@ -59,13 +64,25 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Valida si no se ha creado un usuario
      * @return true : en caso de que no exista el usuario
+     * @param context
      */
-    private boolean validateUserNotExist(){
-        SharedPreferences sharedPreferences = getSharedPreferences(this.NAME_FILE_SP, Context.MODE_PRIVATE);
-        String userCreate = sharedPreferences.getString("user",null);
+    private boolean validateUserNotExist(Context context){
 
-        return userCreate==null || userCreate.trim().equals("");
+        File file = new File(context.getFilesDir().getAbsolutePath(), "UserData.json");
+        return !file.exists()|| file.length()<=0;
     }
+
+
+    private void setInfoUser(Context context){
+
+        User user = this.mainViewModel.getUser(context);
+
+        Button button = findViewById(R.id.btnAdd);
+
+        button.setText(user.getUserName());
+    }
+
+
 
 
 
