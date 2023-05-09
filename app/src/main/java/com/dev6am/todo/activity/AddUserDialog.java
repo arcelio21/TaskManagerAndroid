@@ -15,11 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.dev6am.todo.R;
+import com.dev6am.todo.model.User;
 import com.dev6am.todo.repository.UserRepository;
 
 public class AddUserDialog  extends DialogFragment {
 
-    private  String NAME_FILE_SP;
     private UserRepository userRepository;
 
 
@@ -29,10 +29,7 @@ public class AddUserDialog  extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
 
         userRepository = new UserRepository();
-        NAME_FILE_SP = getString(R.string.nameSharePreferencesFIle);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
@@ -46,7 +43,12 @@ public class AddUserDialog  extends DialogFragment {
                 TextView editTextuser = getDialog().findViewById(R.id.txtAddUser);
                 String userAdd = editTextuser.getText().toString();
 
-                userRepository.addUser(userAdd, requireContext(), AddUserDialog.this.NAME_FILE_SP);
+                User user = User.builder()
+                        .userName(userAdd)
+                        .build();
+
+                userRepository.saveUserJson(user, requireContext());
+
                 updateNameUser();
 
                 dismiss();
@@ -71,8 +73,8 @@ public class AddUserDialog  extends DialogFragment {
         MainActivity activity= (MainActivity) getActivity();
         Button button =activity.findViewById(R.id.btnAdd);
 
-        SharedPreferences sharedPreferences = requireContext().getSharedPreferences(this.NAME_FILE_SP,Context.MODE_PRIVATE);
-        String userCreate = sharedPreferences.getString("user",null);
-        button.setText(userCreate);
+        User user=userRepository.getUser(requireContext());
+
+        button.setText(user.getUserName());
     }
 }
