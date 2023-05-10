@@ -52,11 +52,11 @@ public class AddSubTaskDialog extends DialogFragment {
                 nameSubTask=txtName.getText().toString();
                 Long idSubTask= GeneratorIDSubTask.getGeneratorIdSubTask().incrementAndGet();
 
-                SubTask sub= SubTask.builder()
-                        .name(nameSubTask)
-                        .checked(false)
-                        .id(idSubTask)
-                        .build();
+                SubTask sub= new SubTask();
+                sub.setId(idSubTask);
+                sub.setName(nameSubTask);
+                sub.setChecked(false);
+
 
                 dialogListener.setDataSubTask(sub);
 
