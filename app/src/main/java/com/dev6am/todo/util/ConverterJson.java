@@ -7,6 +7,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ConverterJson {
 
     public static String DataToJson(Data data){
@@ -17,7 +20,7 @@ public class ConverterJson {
         return dataJson;
     }
 
-    public static Data jsonToData(String json){
+    public static <T> T  jsonToData(String json, Class<T> aClass){
 
         Gson gson = new Gson();
 
@@ -25,10 +28,20 @@ public class ConverterJson {
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-        User user = gson.fromJson(jsonObject.get("data"), User.class);
+        return gson.fromJson(jsonObject.get("data"), aClass);
 
-        return Data.builder()
-                .data(user)
-                .build();
+    }
+
+    public static <T> List<T> jsonToDataList(String json, Class<T[]> clasList){
+
+        Gson gson = new Gson();
+
+        JsonElement jsonElement = JsonParser.parseString(json);
+
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+
+        T[] dataArray = gson.fromJson(jsonObject.get("data"), clasList);
+
+        return Arrays.asList(dataArray);
     }
 }
