@@ -51,10 +51,10 @@ public class UserRepository {
     public User getUser(Context context){
 
         String dataJson = ReaderWriterFIle.readFileJson(context.getFilesDir().getAbsolutePath(),this.NAME_FILE);
-        Data data= ConverterJson.jsonToData(dataJson);
+        User data= ConverterJson.jsonToData(dataJson, User.class);
 
 
-        return (User) data.getData();
+        return (User) data;
     }
 
 }
