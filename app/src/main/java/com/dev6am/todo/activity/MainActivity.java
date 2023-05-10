@@ -30,13 +30,14 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel= new MainViewModel();
 
         if(validateUserNotExist(this)){
-            showDialogUser(); //ESTO ES UN PROCESO ASINCRONO
+            this.showDialogUser(); //ESTO ES UN PROCESO ASINCRONO
         }else {
             this.setInfoUser(this);
         }
 
 
     }
+
 
 
     public void showDialogTask(View view){
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         button.setText(user.getUserName());
     }
+
 
 
 

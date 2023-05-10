@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorTextDialogTask">#223397</color>
+
+
+    <!--COLORES DE CATEGORIAS-->
+    <color name="categoryDefault">#4C4949</color>
 </resources>
