@@ -1,5 +1,6 @@
 package com.dev6am.todo.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,13 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev6am.todo.R;
+import com.dev6am.todo.adapter.SpinnerCategoryAdapter;
 import com.dev6am.todo.adapter.SpinnerPriorityAdapter;
 import com.dev6am.todo.adapter.SubTaskAdapter;
+import com.dev6am.todo.model.Category;
 import com.dev6am.todo.model.PriorityLevel;
 import com.dev6am.todo.model.SubTask;
 import com.dev6am.todo.util.DialogListener;
+import com.dev6am.todo.util.GeneratorIdCategory;
 import com.dev6am.todo.viewmodel.TaskViewModel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,10 +49,19 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         this.spinnerCategory=findViewById(R.id.spinCategory);
         this.spinnerPriority=findViewById(R.id.spinPriority);
 
+        if(!this.fileCategoryExist(this)){
+            this.createDefaultCategory(this);
+        }
+
         SpinnerPriorityAdapter spinnerPriorityAdapter = new SpinnerPriorityAdapter(this,R.layout.layout_priority_level,R.id.txtNamePriority ,Arrays.asList(PriorityLevel.values()));
 
         this.spinnerPriority.setAdapter(spinnerPriorityAdapter);
 
+        List<Category> categories = this.getCategories(this);
+
+        SpinnerCategoryAdapter spinnerCategoryAdapter = new SpinnerCategoryAdapter(this,R.layout.layout_categories,R.id.txtNameCategory, categories);
+
+        this.spinnerCategory.setAdapter(spinnerCategoryAdapter);
 
         this.recyclerView=this.implementRecycleView(findViewById(R.id.RVSubTask));
 
@@ -96,5 +110,29 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         recyclerView.smoothScrollToPosition(3);
 
         return  recyclerView;
+    }
+
+    private boolean fileCategoryExist(Context context){
+
+        File file = new File(context.getFilesDir().getAbsolutePath(),"Categories.json");
+
+        return file.exists() && file.length()>0;
+    }
+
+
+    private void createDefaultCategory(Context context) {
+
+        Category category = Category.builder()
+                .id(GeneratorIdCategory.getGeneratorIdCategory().incrementAndGet())
+                .color(getColor(R.color.categoryDefault))
+                .name("Default")
+                .build();
+
+        this.taskViewModel.addCategory(category,context);
+
+    }
+
+    private List<Category> getCategories(Context context){
+        return this.taskViewModel.getCategories(context);
     }
 }
