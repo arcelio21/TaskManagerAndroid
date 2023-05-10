@@ -34,6 +34,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     public void onBindViewHolder(@NonNull SubTaskViewHolder holder, int position) {
 
         holder.SetData(this.subTaskList.get(position));
+
     }
 
     @Override
@@ -61,7 +62,18 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
             this.chkSubTask.setText(subTask.getName());
             this.chkSubTask.setChecked(subTask.isChecked());
+
+            this.chkSubTask.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+                subTask.setChecked(isChecked);
+                if(isChecked){
+                    this.chkSubTask.setBackgroundColor(chkSubTask.getContext().getColor(R.color.purple_500));
+                }else {
+                    this.chkSubTask.setBackgroundColor(chkSubTask.getContext().getColor(R.color.white));
+                }
+            });
         }
+
+
 
     }
 
