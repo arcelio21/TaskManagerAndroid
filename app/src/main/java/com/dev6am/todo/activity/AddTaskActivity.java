@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -24,6 +25,8 @@ import com.dev6am.todo.util.GeneratorIdCategory;
 import com.dev6am.todo.viewmodel.TaskViewModel;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +37,7 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
 
     private List<SubTask> subTaskList;
     private Button btnSubTask;
-    private RecyclerView recyclerView;
+    private RecyclerView rvSubTaks;
     private SubTaskAdapter subTaskAdapter;
     private Spinner spinnerCategory;
     private Spinner spinnerPriority;
@@ -47,23 +50,18 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         taskViewModel= new ViewModelProvider(this).get(TaskViewModel.class);
 
         this.spinnerCategory=findViewById(R.id.spinCategory);
-        this.spinnerPriority=findViewById(R.id.spinPriority);
+
+
+
 
         if(!this.fileCategoryExist(this)){
             this.createDefaultCategory(this);
         }
 
-        SpinnerPriorityAdapter spinnerPriorityAdapter = new SpinnerPriorityAdapter(this,R.layout.layout_priority_level,R.id.txtNamePriority ,Arrays.asList(PriorityLevel.values()));
+        this.loadSpinnerPriority();
+        this.loadSpinnerCategory();
 
-        this.spinnerPriority.setAdapter(spinnerPriorityAdapter);
-
-        List<Category> categories = this.getCategories(this);
-
-        SpinnerCategoryAdapter spinnerCategoryAdapter = new SpinnerCategoryAdapter(this,R.layout.layout_categories,R.id.txtNameCategory, categories);
-
-        this.spinnerCategory.setAdapter(spinnerCategoryAdapter);
-
-        this.recyclerView=this.implementRecycleView(findViewById(R.id.RVSubTask));
+        this.rvSubTaks=this.implementRecycleView(findViewById(R.id.RVSubTask));
 
         /*
         * BOTON PARA MOSTRAR DIALOGO DE SUBTAREA
@@ -81,7 +79,26 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
     }
 
     public void showSave(View view){
-        Log.println(Log.INFO,"TEST SEND DATA", subTaskList.get(0).getName());
+
+        this.getDataLayoutTask();
+    }
+
+    private void loadSpinnerPriority(){
+
+        this.spinnerPriority=findViewById(R.id.spinPriority);
+        SpinnerPriorityAdapter spinnerPriorityAdapter = new SpinnerPriorityAdapter(this,R.layout.layout_priority_level,R.id.txtNamePriority ,Arrays.asList(PriorityLevel.values()));
+
+        this.spinnerPriority.setAdapter(spinnerPriorityAdapter);
+
+    }
+
+    private void loadSpinnerCategory(){
+
+        List<Category> categories = this.getCategories(this);
+
+        SpinnerCategoryAdapter spinnerCategoryAdapter = new SpinnerCategoryAdapter(this,R.layout.layout_categories,R.id.txtNameCategory, categories);
+
+        this.spinnerCategory.setAdapter(spinnerCategoryAdapter);
     }
 
     @Override
@@ -89,13 +106,13 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
 
         if(subTaskList!=null){
             subTaskList.add(subTask);
-            this.addSubTaskRecycleView(subTask);
+            this.addSubTaskRecycleView();
         }else {
             throw new RuntimeException("List SubTask is not Created");
         }
     }
 
-    private void addSubTaskRecycleView(SubTask subTask){
+    private void addSubTaskRecycleView(){
         this.subTaskAdapter.setSubTaskList(subTaskList);
         this.subTaskAdapter.notifyItemInserted(subTaskList.size()-1);
     }
@@ -134,5 +151,19 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
 
     private List<Category> getCategories(Context context){
         return this.taskViewModel.getCategories(context);
+    }
+
+    /**
+     * FORMATO DE FECHA: yyyy-MM-dd
+     */
+    private void getDataLayoutTask(){
+
+        TextView txtNameTask = findViewById(R.id.txtNameTask);
+        TextView txtDateTask = findViewById(R.id.txtDateTask);
+        Object category = this.spinnerCategory.getSelectedItem();
+        Object priority = this.spinnerPriority.getSelectedItem();
+        TextView txtMoreInformation = findViewById(R.id.txtMoreInformation);
+
+        Log.println(Log.INFO,"TEST","FUNCIONO");
     }
 }
