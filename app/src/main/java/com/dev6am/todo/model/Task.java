@@ -1,5 +1,6 @@
 package com.dev6am.todo.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Builder;
@@ -12,6 +13,7 @@ public class Task {
     private Long id;
     private String title;
     private String body;
+    private String date;
 
     private PriorityLevel priorityLevel;
 
