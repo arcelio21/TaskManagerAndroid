@@ -2,23 +2,31 @@ package com.dev6am.todo.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev6am.todo.R;
+import com.dev6am.todo.adapter.TaskAdapter;
+import com.dev6am.todo.model.Task;
 import com.dev6am.todo.model.User;
+import com.dev6am.todo.util.SelectListener;
 import com.dev6am.todo.viewmodel.MainViewModel;
 
 import java.io.File;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SelectListener {
 
     private MainViewModel mainViewModel;
+    private RecyclerView rvTaks;
+    private List<Task> taskList;
 
 
 
@@ -28,11 +36,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mainViewModel= new MainViewModel();
+        this.rvTaks = findViewById(R.id.rvShowTaks);
+
 
         if(validateUserNotExist(this)){
             this.showDialogUser(); //ESTO ES UN PROCESO ASINCRONO
         }else {
             this.setInfoUser(this);
+        }
+
+        if (this.validateFileTaskExits(this)){
+            this.taskList = this.mainViewModel.getTasks(this);
+            this.showInfoRecycleView(this.rvTaks);
         }
 
 
@@ -73,6 +88,12 @@ public class MainActivity extends AppCompatActivity {
         return !file.exists()|| file.length()<=0;
     }
 
+    private boolean validateFileTaskExits(Context context){
+
+        File file = new File(context.getFilesDir().getAbsolutePath(), "Tasks.json");
+        return file.exists() && file.length()>0;
+    }
+
 
     private void setInfoUser(Context context){
 
@@ -84,9 +105,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private void showInfoRecycleView(RecyclerView rvTaks){
 
+        TaskAdapter taskAdapter = new TaskAdapter(this.taskList,this);
 
+        rvTaks.setLayoutManager(new LinearLayoutManager(this));
+        rvTaks.setAdapter(taskAdapter);
+    }
 
+    /**
+     * SE UTILIZA PARA ASIGNAR LA POSICION DE LA TAREA QUE SE QUIERE VER TODA LA INFORMACION
+     * @param position
+     */
+    @Override
+    public void setTaskSelectMoreInfoListener(int position) {
 
-
+        Toast.makeText(this,"Title: "+this.taskList.get(position).getTitle(),Toast.LENGTH_SHORT).show();
+    }
 }

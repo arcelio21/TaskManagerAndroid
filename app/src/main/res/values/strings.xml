@@ -24,4 +24,8 @@
     <string name="spinCategory">Choose category</string>
     <string name="spinPriority">Choose priority</string>
     <string name="mm_dd_yyyy">mm/dd/yyyy</string>
+
+    <!--STRING DE LISTADO DE TAREAS-->
+    <string name="showInfoTask">See more</string>
+    <string name="txtDefaultValue">Default</string>
 </resources>
