@@ -1,6 +1,8 @@
 package com.dev6am.todo.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,13 +22,17 @@ import com.dev6am.todo.adapter.SubTaskAdapter;
 import com.dev6am.todo.model.Category;
 import com.dev6am.todo.model.PriorityLevel;
 import com.dev6am.todo.model.SubTask;
+import com.dev6am.todo.model.Task;
 import com.dev6am.todo.util.DialogListener;
+import com.dev6am.todo.util.GeneratorIDTask;
 import com.dev6am.todo.util.GeneratorIdCategory;
 import com.dev6am.todo.viewmodel.TaskViewModel;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -79,8 +85,11 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
     }
 
     public void showSave(View view){
+        Task task= this.getDataLayoutTask();
+        this.taskViewModel.addTaks(task,this);
 
-        this.getDataLayoutTask();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
     private void loadSpinnerPriority(){
@@ -154,9 +163,9 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
     }
 
     /**
-     * FORMATO DE FECHA: yyyy-MM-dd
+     * FORMATO DE FECHA: yyyy/MM/dd
      */
-    private void getDataLayoutTask(){
+    private Task getDataLayoutTask(){
 
         TextView txtNameTask = findViewById(R.id.txtNameTask);
         TextView txtDateTask = findViewById(R.id.txtDateTask);
@@ -164,6 +173,24 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         Object priority = this.spinnerPriority.getSelectedItem();
         TextView txtMoreInformation = findViewById(R.id.txtMoreInformation);
 
-        Log.println(Log.INFO,"TEST","FUNCIONO");
+        LocalDate date=null;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            DateTimeFormatter  dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+           date = LocalDate.parse(txtDateTask.getText(),dtf);
+        }
+
+
+        return Task.builder()
+                .id(GeneratorIDTask.getGeneratorIdTask().incrementAndGet())
+                .title(txtNameTask.getText().toString())
+                .body(txtMoreInformation.getText().toString())
+                .date(date.toString())
+                .checked(false)
+                .priorityLevel((PriorityLevel) priority)
+                .subTasks(this.subTaskList)
+                .tags((Category) category)
+                .build();
     }
 }
