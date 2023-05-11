@@ -8,7 +8,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ConverterJson {
 
@@ -42,6 +44,7 @@ public class ConverterJson {
 
         T[] dataArray = gson.fromJson(jsonObject.get("data"), clasList);
 
-        return Arrays.asList(dataArray);
+
+        return Arrays.stream(dataArray).collect(Collectors.toList());
     }
 }
