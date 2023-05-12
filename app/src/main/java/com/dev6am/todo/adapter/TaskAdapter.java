@@ -1,5 +1,6 @@
 package com.dev6am.todo.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,14 @@ import com.dev6am.todo.util.SelectListener;
 
 import java.util.List;
 
+/**
+ * CLASE ADAPTER PARA MOSTRAR TAREAS DISPONIBLES
+ */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private SelectListener listenerBtn;
 
-    private List<Task> taskList;
+    private final List<Task> taskList;
 
     public TaskAdapter(List<Task> taskList, SelectListener listener) {
         this.taskList = taskList;
