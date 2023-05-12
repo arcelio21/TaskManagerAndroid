@@ -63,6 +63,13 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
 
         this.toolbar = findViewById(R.id.toolbar);
 
+        if(validateUserNotExist(this)){
+            this.showDialogUser(); //ESTO ES UN PROCESO ASINCRONO
+        }else {
+            this.setInfoUser(this);
+        }
+
+
 
         this.toolbar.setOnMenuItemClickListener(item -> {
 
@@ -85,12 +92,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
 
         this.categories = this.loadCategories();
 
-
-        if(validateUserNotExist(this)){
-            this.showDialogUser(); //ESTO ES UN PROCESO ASINCRONO
-        }else {
-            this.setInfoUser(this);
-        }
 
         if (this.validateFileTaskExits(this)){
             this.taskList = this.mainViewModel.getTasks(this);
@@ -155,9 +156,10 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
 
         User user = this.mainViewModel.getUser(context);
 
-        Button button = findViewById(R.id.btnAdd);
+        StringBuilder sb = new StringBuilder(this.toolbar.getTitle());
+        sb.append(" "+user.getUserName());
 
-        button.setText(user.getUserName());
+        this.toolbar.setTitle(sb);
     }
 
 
