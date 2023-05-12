@@ -32,8 +32,8 @@ public class SpinnerCategoryAdapter extends ArrayAdapter<Category> {
 
         TextView txtNameCategory=view.findViewById(R.id.txtNameCategory);
         txtNameCategory.setText(this.categories.get(position).getName());
-        txtNameCategory.setBackgroundColor(this.categories.get(position).getColor());
-        txtNameCategory.setTextColor(parent.getResources().getColor(R.color.white,parent.getContext().getTheme()));
+        //txtNameCategory.setBackgroundColor(this.categories.get(position).getColor());
+        //txtNameCategory.setTextColor(parent.getResources().getColor(R.color.white,parent.getContext().getTheme()));
 
         return  view;
     }
