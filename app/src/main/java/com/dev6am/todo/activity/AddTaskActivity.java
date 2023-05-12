@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -25,12 +24,8 @@ import com.dev6am.todo.model.SubTask;
 import com.dev6am.todo.model.Task;
 import com.dev6am.todo.util.DialogListener;
 import com.dev6am.todo.util.GeneratorIDTask;
-import com.dev6am.todo.util.GeneratorIdCategory;
 import com.dev6am.todo.viewmodel.TaskViewModel;
 
-import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -59,10 +54,6 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
 
 
 
-
-        if(!this.fileCategoryExist(this)){
-            this.createDefaultCategory(this);
-        }
 
         this.loadSpinnerPriority();
         this.loadSpinnerCategory();
@@ -138,25 +129,8 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         return  recyclerView;
     }
 
-    private boolean fileCategoryExist(Context context){
-
-        File file = new File(context.getFilesDir().getAbsolutePath(),"Categories.json");
-
-        return file.exists() && file.length()>0;
-    }
 
 
-    private void createDefaultCategory(Context context) {
-
-        Category category = Category.builder()
-                .id(GeneratorIdCategory.getGeneratorIdCategory().incrementAndGet())
-                .color(getColor(R.color.categoryDefault))
-                .name("Default")
-                .build();
-
-        this.taskViewModel.addCategory(category,context);
-
-    }
 
     private List<Category> getCategories(Context context){
         return this.taskViewModel.getCategories(context);
