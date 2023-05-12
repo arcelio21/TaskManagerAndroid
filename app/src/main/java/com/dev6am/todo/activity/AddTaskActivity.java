@@ -24,6 +24,7 @@ import com.dev6am.todo.model.SubTask;
 import com.dev6am.todo.model.Task;
 import com.dev6am.todo.util.DialogListener;
 import com.dev6am.todo.util.GeneratorIDTask;
+import com.dev6am.todo.util.SubTaskListener;
 import com.dev6am.todo.viewmodel.TaskViewModel;
 
 import java.time.LocalDate;
@@ -32,12 +33,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddTaskActivity extends AppCompatActivity implements DialogListener {
+public class AddTaskActivity extends AppCompatActivity implements DialogListener, SubTaskListener {
 
     private TaskViewModel taskViewModel;
 
     private List<SubTask> subTaskList;
     private Button btnSubTask;
+    private Button btnCancel;
     private RecyclerView rvSubTaks;
     private SubTaskAdapter subTaskAdapter;
     private Spinner spinnerCategory;
@@ -66,6 +68,12 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         btnSubTask= findViewById(R.id.btnAddSubTask);
         btnSubTask.setOnClickListener(view -> {
             this.showDialogAddSubTask();
+        });
+
+        btnCancel = findViewById(R.id.btnCancelTask);
+        btnCancel.setOnClickListener(view -> {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -120,7 +128,7 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
 
     private RecyclerView implementRecycleView(RecyclerView recyclerView){
 
-        this.subTaskAdapter = new SubTaskAdapter(subTaskList);
+        this.subTaskAdapter = new SubTaskAdapter(subTaskList,this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(this.subTaskAdapter);
@@ -166,5 +174,13 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
                 .subTasks(this.subTaskList)
                 .tags((Category) category)
                 .build();
+    }
+
+    @Override
+    public void remove(SubTask subTask) {
+
+        int position = this.subTaskList.indexOf(subTask);
+        this.subTaskList.remove(subTask);
+        this.subTaskAdapter.notifyItemRemoved(position);
     }
 }

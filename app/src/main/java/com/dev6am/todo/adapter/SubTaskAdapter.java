@@ -3,6 +3,7 @@ package com.dev6am.todo.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
@@ -10,16 +11,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev6am.todo.R;
 import com.dev6am.todo.model.SubTask;
+import com.dev6am.todo.util.SubTaskListener;
 
 import java.util.List;
 
+/**
+ * CLASE QUE SE ENCARGAR DE MOSTRAR SUBTAREAS DE UNA TAREA PRINCIPAL EN RECYCLE VIEW
+ */
 public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskViewHolder> {
 
     private List<SubTask> subTaskList;
+    private SubTaskListener subTaskListener;
 
-    public SubTaskAdapter(List<SubTask> subTaskList) {
+    public SubTaskAdapter(List<SubTask> subTaskList, SubTaskListener subTaskListener) {
 
         this.subTaskList=subTaskList;
+        this.subTaskListener = subTaskListener;
     }
 
     @NonNull
@@ -27,7 +34,7 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     public SubTaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_subtask,parent,false);
-        return new SubTaskViewHolder(view);
+        return new SubTaskViewHolder(view, this.subTaskListener);
     }
 
     @Override
@@ -50,10 +57,16 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
 
         private SubTask subTask;
         private final CheckBox chkSubTask;
-        public SubTaskViewHolder(@NonNull View itemView) {
+        private Button btnDelete;
+        private SubTaskListener subTaskListener;
+
+        public SubTaskViewHolder(@NonNull View itemView,SubTaskListener subTaskListener) {
             super(itemView);
 
             this.chkSubTask=itemView.findViewById(R.id.ckbSubTask);
+            this.btnDelete = itemView.findViewById(R.id.btnDeletSubTask);
+            this.subTaskListener = subTaskListener;
+
         }
 
 
@@ -71,6 +84,10 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
                     this.chkSubTask.setBackgroundColor(chkSubTask.getContext().getColor(R.color.white));
                 }
             });
+
+            this.btnDelete.setOnClickListener(view -> {
+                this.subTaskListener.remove(this.subTask);
+            });
         }
 
 
@@ -80,4 +97,5 @@ public class SubTaskAdapter extends RecyclerView.Adapter<SubTaskAdapter.SubTaskV
     public void setSubTaskList(List<SubTask> subTaskList) {
         this.subTaskList = subTaskList;
     }
+
 }

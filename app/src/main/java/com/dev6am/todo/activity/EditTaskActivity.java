@@ -23,6 +23,7 @@ import com.dev6am.todo.model.Task;
 import com.dev6am.todo.repository.CategoryRepository;
 import com.dev6am.todo.repository.TaskRepository;
 import com.dev6am.todo.util.DialogListener;
+import com.dev6am.todo.util.SubTaskListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EditTaskActivity extends AppCompatActivity implements DialogListener {
+public class EditTaskActivity extends AppCompatActivity implements DialogListener, SubTaskListener {
 
     private Task taskUpdate;
     private List<SubTask> subTaskList;
@@ -69,18 +70,6 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
         this.initData();
     }
 
-    @Override
-    protected void onStart() {
-        Log.d("METODO START", "ESTA EN METODO START");
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-
-        Log.d("METODO ON RESUME", "ESTOY EN RESUME");
-        super.onResume();
-    }
 
     private void loadComponentLayout(){
         this.btnSubTask = findViewById(R.id.btnAddSubTaskUpdate);
@@ -162,7 +151,7 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
 
             this.subTaskList = (this.taskUpdate.getSubTasks().isEmpty())? new ArrayList<>():this.taskUpdate.getSubTasks();
 
-            this.subTaskAdapter = new SubTaskAdapter(this.subTaskList);
+            this.subTaskAdapter = new SubTaskAdapter(this.subTaskList,this);
             this.rvSubTaks.setLayoutManager(new LinearLayoutManager(this));
             this.rvSubTaks.setAdapter(this.subTaskAdapter);
 
@@ -175,10 +164,10 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
 
         Log.d("EDIT TAKS", "SE VA A MOSTRAR EN PANTALLA");
         this.subTaskList.add(subTask);
-        this.notifyChangeDataSUbtaks();
+        this.notifyChangeDataSubtaks();
     }
 
-    private void notifyChangeDataSUbtaks(){
+    private void notifyChangeDataSubtaks(){
         this.subTaskAdapter.setSubTaskList(this.subTaskList);
         this.subTaskAdapter.notifyItemInserted(this.subTaskList.size()-1);
     }
@@ -192,5 +181,13 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
         this.taskUpdate.setPriorityLevel((PriorityLevel) this.spinnerPriority.getSelectedItem());
         this.taskUpdate.setBody(this.etMoreInformacion.getText().toString());
         this.taskUpdate.setSubTasks(this.subTaskList);
+    }
+
+    @Override
+    public void remove(SubTask subTask) {
+
+        int position = this.subTaskList.indexOf(subTask);
+        this.subTaskList.remove(subTask);
+        this.subTaskAdapter.notifyItemRemoved(position);
     }
 }
