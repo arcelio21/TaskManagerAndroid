@@ -12,7 +12,7 @@ import java.util.List;
 
 public class CategoryRepository {
 
-    private final String fileName="Category.json";
+    private final String fileName="Categories.json";
 
     /**
      * ESTE METODO SOLO SE UTILIZARA CUANDO SE INICIE LA APP Y SE CREE LA CATEGORIA POR DEFECTO
