@@ -26,6 +26,10 @@ public class AddSubTaskDialog extends DialogFragment {
     private String nameSubTask;
     private DialogListener dialogListener;
 
+    /**
+     * SE OBTIENE REFERENCIA DEL CONTEXTO DONDE SE MOSTRARA, SE LLAMA AUTOMATICAMENTE
+     * @param context
+     */
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -56,6 +60,7 @@ public class AddSubTaskDialog extends DialogFragment {
                 sub.setId(idSubTask);
                 sub.setName(nameSubTask);
                 sub.setChecked(false);
+                Log.d("DIALOG","CREO LA TAREA");
 
 
                 dialogListener.setDataSubTask(sub);

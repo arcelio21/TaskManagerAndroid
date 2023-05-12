@@ -53,4 +53,20 @@ public class TaskRepository {
                 filter((task)-> task.getId().equals(idTask))
                 .findFirst().get();
     }
+
+    public boolean update(Task task, Context context){
+        List<Task> taskList = this.getTasks(context);
+        taskList = taskList.stream().
+                filter((taskStream)-> !taskStream.getId().equals(task.getId()))
+                .collect(Collectors.toList());
+        taskList.add(task);
+
+        Data data = Data.builder()
+                .data(taskList)
+                .build();
+
+        String taskJson = ConverterJson.DataToJson(data);
+
+        return ReaderWriterFIle.writeFileJson(taskJson,context.getFilesDir().getAbsolutePath(),TaskRepository.FILE_NAME);
+    }
 }
