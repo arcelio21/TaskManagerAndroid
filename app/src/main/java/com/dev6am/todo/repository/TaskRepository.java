@@ -9,6 +9,7 @@ import com.dev6am.todo.util.ReaderWriterFIle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TaskRepository {
 
@@ -44,5 +45,12 @@ public class TaskRepository {
         String dataJson= ReaderWriterFIle.readFileJson(context.getFilesDir().getAbsolutePath(),TaskRepository.FILE_NAME);
 
         return ConverterJson.jsonToDataList(dataJson,Task[].class);
+    }
+
+    public Task getById(Long idTask, Context context){
+
+        return this.getTasks(context).stream().
+                filter((task)-> task.getId().equals(idTask))
+                .findFirst().get();
     }
 }
