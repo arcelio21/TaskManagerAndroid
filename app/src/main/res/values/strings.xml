@@ -27,11 +27,13 @@
     <string name="txtcategoryTask">Category</string>
     <string name="txtPriorityTask">Priority</string>
     <string name="txtSubTast">Subtask</string>
-    <string name="txtMoreInfo">More Information</string>
+    <string name="txtMoreInfo">More</string>
     <string name="spinCategory">Choose category</string>
     <string name="spinPriority">Choose priority</string>
     <string name="mm_dd_yyyy">mm/dd/yyyy</string>
 
     <string name="showInfoTask">See more</string>
     <string name="txtDefaultValue">Default</string>
+    <string name="addcategorybtn">addCategoryBtn</string>
+    <string name="add_category">Add category</string>
 </resources>

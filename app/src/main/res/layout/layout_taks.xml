@@ -1,79 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="6dp"
+    android:background="@drawable/background_cardview"
+    card_view:cardBackgroundColor="@null"
+    card_view:cardCornerRadius="8dp"
+    card_view:cardElevation="4dp"
+    card_view:contentPadding="4dp">
 
-    >
     <LinearLayout
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:orientation="horizontal"
+        android:gravity="center">
+
         <CheckBox
             android:id="@+id/ckbTaskCheck"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:fontFamily="monospace" />
-
-        <TextView
-            android:id="@+id/txtNameTaskLayoutTask"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="11sp"
-            android:gravity="center"
-            android:fontFamily="monospace"
-            android:text="@string/txtDefaultValue"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginStart="12dp"
-       >
-
-        <TextView
-            android:id="@+id/txtNamePriorityLayoutTask"
-            android:layout_width="wrap_content"
+            android:layout_width="48dp"
+            android:theme="@style/colorCheckBox"
             android:layout_height="wrap_content"
             android:fontFamily="monospace"
-            android:text="@string/txtPriorityTask"
-            android:textColor="@color/colorTextDialogTask"
             android:textSize="11sp" />
 
-        <TextView
-            android:id="@+id/txtDateLayoutTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:text="@string/txtDateTask"
-            android:textColor="@color/colorTextDialogTask"
-            android:textSize="11sp" />
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="111dp"
+            android:layout_height="49dp"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+            <TextView
+                android:id="@+id/txtNameTaskLayoutTask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:textColor="@color/colorTextDialogTask"
+                android:text="@string/txtDefaultValue"
+                android:textSize="11sp" />
+        </LinearLayout>
 
-        android:layout_marginStart="12dp"
-        >
+        <LinearLayout
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtNamePriorityLayoutTask"
+                android:layout_width="match_parent"
+                android:layout_height="27dp"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="@string/txtPriorityTask"
+                android:textColor="@color/colorTextDialogTask"
+                android:textSize="11sp" />
+
+            <TextView
+                android:id="@+id/txtDateLayoutTask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="monospace"
+                android:gravity="center"
+                android:text="@string/txtDateTask"
+                android:textColor="@color/colorTextDialogTask"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/btnShowInfoTask"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="76dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
             android:fontFamily="monospace"
-            android:text="@string/showInfoTask"
-            android:textSize="11sp"
-            tools:ignore="TouchTargetSizeCheck"
-            />
+            android:background="@drawable/btn_round_more_information"
+
+            android:drawableBottom="@drawable/task_view_svgrepo_com"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:backgroundTint="@null"
+            tools:ignore="TouchTargetSizeCheck" />
+
     </LinearLayout>
 
 
-
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>
