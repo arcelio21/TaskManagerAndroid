@@ -12,6 +12,7 @@ import com.dev6am.todo.activity.FragmentTaskCategoryBase;
 import com.dev6am.todo.model.Category;
 import com.dev6am.todo.model.PriorityLevel;
 import com.dev6am.todo.model.Task;
+import com.dev6am.todo.util.CheckedTaskListener;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -52,12 +53,13 @@ public class TaskViewPagerAdapter extends FragmentStateAdapter {
         Predicate<Task> idCategoryPredicate = (task)-> task.getTags().getId().equals(idCategory);
 
         Comparator<Task> comparatorPriority= Comparator.comparing(Task::getPriorityLevel);
-        ;
 
         return tasks.stream()
                 .filter(idCategoryPredicate)
                 .sorted(comparatorPriority)
+                .sorted(Comparator.comparing(Task::getChecked))
                 .collect(Collectors.toList());
     }
+
 
 }

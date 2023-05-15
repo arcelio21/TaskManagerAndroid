@@ -67,7 +67,7 @@ public class AddSubTaskDialog extends DialogFragment {
 
                 dismiss();
             }
-        }).setNegativeButton("cancelSave", new DialogInterface.OnClickListener() {
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 AddSubTaskDialog.this.getDialog().cancel();

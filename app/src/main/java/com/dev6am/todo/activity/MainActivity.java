@@ -3,15 +3,11 @@ package com.dev6am.todo.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-import androidx.appcompat.widget.Toolbar;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,16 +27,12 @@ import com.dev6am.todo.util.SelectListener;
 import com.dev6am.todo.util.TabLayoutConfigure;
 import com.dev6am.todo.util.TaskCategoryTabListener;
 import com.dev6am.todo.viewmodel.MainViewModel;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity implements SelectListener, DialogCategoryListener {
 
@@ -78,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
                 AddCategoryDialog addCategoryDialog = new AddCategoryDialog(this);
                 addCategoryDialog.show(getSupportFragmentManager(),"Dialogc Category");
 
-                //TODO AGREGAR CODIGO DE ADD CATEGORY
                 return true;
             }
             return false;
@@ -165,16 +156,16 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
 
     private void showInfoRecycleView(RecyclerView rvTaks){
 
-        TaskAdapter taskAdapter = new TaskAdapter(this.taskList,this);
+        /*TaskAdapter taskAdapter = new TaskAdapter(this.taskList,this);
 
         rvTaks.setLayoutManager(new LinearLayoutManager(this));
-        rvTaks.setAdapter(taskAdapter);
+        rvTaks.setAdapter(taskAdapter);*/
     }
 
     /**
      * SE UTILIZA PARA ASIGNAR LA POSICION DE LA TAREA QUE SE QUIERE VER TODA LA INFORMACION
      * @param position
-     * DEPRECATED
+     * @DEPRECATED
      */
     @Override
     public void setTaskSelectMoreInfoListener(int position) {
@@ -184,6 +175,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
         startActivity(intent);
         //Toast.makeText(this,"Title: "+this.taskList.get(position).getTitle(),Toast.LENGTH_SHORT).show();
     }
+
+
 
     public List<Category> loadCategories(){
 
@@ -217,7 +210,9 @@ public class MainActivity extends AppCompatActivity implements SelectListener, D
         this.taskViewPagerAdapter = new TaskViewPagerAdapter(getSupportFragmentManager()
                 , getLifecycle(), this.taskList, this.categories);
 
+
         PageChangeTaskCategory pageChangeTaskCategory= new PageChangeTaskCategory(tbLayout);
+
 
         TaskCategoryTabListener tabListener = new TaskCategoryTabListener(viewPager2);
 

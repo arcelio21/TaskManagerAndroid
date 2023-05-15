@@ -5,9 +5,12 @@ import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Builder
-@Data
+@Getter
+@Setter
 public class Task {
 
     private Long id;
@@ -21,6 +24,6 @@ public class Task {
 
     private List<SubTask> subTasks;
 
-    private  boolean checked=false;
+    private  Boolean checked;
 
 }
