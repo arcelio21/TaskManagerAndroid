@@ -12,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev6am.todo.R;
+import com.dev6am.todo.activity.MainActivity;
 import com.dev6am.todo.model.Task;
+import com.dev6am.todo.util.CheckedTaskListener;
 import com.dev6am.todo.util.SelectListener;
 
 import java.util.List;
@@ -23,12 +25,14 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
 
     private SelectListener listenerBtn;
+    private CheckedTaskListener checkedTaskListener;
 
-    private final List<Task> taskList;
+    private  List<Task> taskList;
 
-    public TaskAdapter(List<Task> taskList, SelectListener listener) {
+    public TaskAdapter(List<Task> taskList, SelectListener listener, CheckedTaskListener checkedTaskListener) {
         this.taskList = taskList;
         this.listenerBtn = listener;
+        this.checkedTaskListener = checkedTaskListener;
     }
 
     /**
@@ -63,6 +67,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 this.listenerBtn.setTaskSelectMoreInfoListener(position);
             }
         });
+
+        holder.getCkbTaskCheck().setOnCheckedChangeListener((compoundButton, b) -> {
+
+            if(this.checkedTaskListener!=null){
+                this.taskList.get(position).setChecked(compoundButton.isChecked());
+                this.checkedTaskListener.setCheckeCompleteTask(position, this.taskList.get(position));
+                Log.d("FUNCIONA EL CHECKED", "ORDENO 1");
+            }
+        });
     }
 
     @Override
@@ -93,7 +106,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public void setTask(Task task) {
             this.task = task;
 
-            this.ckbTaskCheck.setChecked(task.isChecked());
+            this.ckbTaskCheck.setChecked(task.getChecked());
 
             this.txtNameTask.setText(task.getTitle());
             this.txtPriorityName.setText(task.getPriorityLevel().name());
@@ -105,10 +118,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             return btnSeeInfo;
         }
 
-
+        public CheckBox getCkbTaskCheck() {
+            return ckbTaskCheck;
+        }
     }
 
     public void setListenerBtn(SelectListener listenerBtn) {
         this.listenerBtn = listenerBtn;
+    }
+
+    public void setCheckedTaskListener(CheckedTaskListener checkedTaskListener) {
+        this.checkedTaskListener = checkedTaskListener;
+    }
+
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
     }
 }
