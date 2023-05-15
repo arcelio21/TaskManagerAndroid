@@ -6,6 +6,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ import com.dev6am.todo.model.Task;
 import com.dev6am.todo.util.DialogListener;
 import com.dev6am.todo.util.GeneratorIDTask;
 import com.dev6am.todo.util.SubTaskListener;
+import com.dev6am.todo.util.UpdateListenerDate;
 import com.dev6am.todo.viewmodel.TaskViewModel;
 
 import java.time.LocalDate;
@@ -33,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddTaskActivity extends AppCompatActivity implements DialogListener, SubTaskListener {
+public class AddTaskActivity extends AppCompatActivity implements DialogListener, SubTaskListener, UpdateListenerDate {
 
     private TaskViewModel taskViewModel;
 
@@ -45,6 +48,10 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
     private Spinner spinnerCategory;
     private Spinner spinnerPriority;
 
+    private DatePicker datePicker;
+    private Button btnAddDate;
+    private EditText etDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +61,14 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
 
         this.spinnerCategory=findViewById(R.id.spinCategory);
 
+        this.btnAddDate = findViewById(R.id.btnAddDateTask);
+        this.etDate = findViewById(R.id.txtDateTask);
 
-
+        this.btnAddDate.setOnClickListener(view -> {
+            DialogDatePicker datePicker = new DialogDatePicker();
+            datePicker.setUpdateListenerDate(this);
+            datePicker.show(getSupportFragmentManager(),"DatePicker");
+        });
 
         this.loadSpinnerPriority();
         this.loadSpinnerCategory();
@@ -144,9 +157,7 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         return this.taskViewModel.getCategories(context);
     }
 
-    /**
-     * FORMATO DE FECHA: yyyy/MM/dd
-     */
+
     private Task getDataLayoutTask(){
 
         TextView txtNameTask = findViewById(R.id.txtNameTask);
@@ -155,20 +166,11 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         Object priority = this.spinnerPriority.getSelectedItem();
         TextView txtMoreInformation = findViewById(R.id.txtMoreInformation);
 
-        LocalDate date=null;
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            DateTimeFormatter  dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-           date = LocalDate.parse(txtDateTask.getText(),dtf);
-        }
-
-
         return Task.builder()
                 .id(GeneratorIDTask.getGeneratorIdTask().incrementAndGet())
                 .title(txtNameTask.getText().toString())
                 .body(txtMoreInformation.getText().toString())
-                .date(date.toString())
+                .date(txtDateTask.getText().toString())
                 .checked(false)
                 .priorityLevel((PriorityLevel) priority)
                 .subTasks(this.subTaskList)
@@ -182,5 +184,10 @@ public class AddTaskActivity extends AppCompatActivity implements DialogListener
         int position = this.subTaskList.indexOf(subTask);
         this.subTaskList.remove(subTask);
         this.subTaskAdapter.notifyItemRemoved(position);
+    }
+
+    public void updateDate(String  date){
+
+        this.etDate.setText(date);
     }
 }

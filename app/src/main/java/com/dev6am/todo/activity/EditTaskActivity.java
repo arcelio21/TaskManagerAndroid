@@ -24,6 +24,7 @@ import com.dev6am.todo.repository.CategoryRepository;
 import com.dev6am.todo.repository.TaskRepository;
 import com.dev6am.todo.util.DialogListener;
 import com.dev6am.todo.util.SubTaskListener;
+import com.dev6am.todo.util.UpdateListenerDate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,13 +32,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EditTaskActivity extends AppCompatActivity implements DialogListener, SubTaskListener {
+public class EditTaskActivity extends AppCompatActivity implements DialogListener, SubTaskListener, UpdateListenerDate {
 
     private Task taskUpdate;
     private List<SubTask> subTaskList;
     private Button btnSubTask;
     private Button btnBack;
     private Button btnUpdate;
+    private Button btnSelectDate;
     private RecyclerView rvSubTaks;
     private SubTaskAdapter subTaskAdapter;
     private Spinner spinnerCategory;
@@ -57,7 +59,6 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_task);
 
-        Log.d("CREATE", "CREADO EDITTASK");
 
         Intent intent = getIntent();
         Long idTask = intent.getLongExtra("ID_TASK",0);
@@ -83,6 +84,13 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
         this.btnBack.setOnClickListener(view -> {
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
+        });
+
+        this.btnSelectDate = findViewById(R.id.btnAddDateTaskUpdate);
+        this.btnSelectDate.setOnClickListener(view -> {
+            DialogDatePicker datePicker = new DialogDatePicker();
+            datePicker.setUpdateListenerDate(this);
+            datePicker.show(getSupportFragmentManager(),"DatePicker");
         });
 
         this.btnUpdate = findViewById(R.id.btnUpdateTask);
@@ -117,7 +125,6 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
         if(taskUpdate!=null){
 
             CategoryRepository categoryRepository = new CategoryRepository();
-
             this.etName.setText(this.taskUpdate.getTitle());
             this.etDate.setText(this.taskUpdate.getDate());
             this.etMoreInformacion.setText(this.taskUpdate.getBody());
@@ -189,5 +196,13 @@ public class EditTaskActivity extends AppCompatActivity implements DialogListene
         int position = this.subTaskList.indexOf(subTask);
         this.subTaskList.remove(subTask);
         this.subTaskAdapter.notifyItemRemoved(position);
+    }
+
+    public String getDateTask(){
+        return this.taskUpdate.getDate();
+    }
+
+    public void updateDate(String date){
+        this.etDate.setText(date);
     }
 }
